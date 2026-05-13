@@ -6,6 +6,7 @@ en:
   link_sheets: 'Sheets'
   link_sheet_requests: 'Sheet Requests'
   link_dashboard: 'Dashboard'
+  link_profiles:  'Profiles'
 
   #languages
   language:     'Language'
@@ -33,6 +34,10 @@ en:
   minimum_characters: "6 characters minimum."
   cancel:             "Cancel"
   confirm:            "Confirm"
+  follow:             "Follow"
+  follow_back:        "Follow back"
+  unfollow:           "Unfollow"
+  logout:             "Log out"
 
   #error forms
   error:                 'errors'
@@ -83,6 +88,10 @@ en:
       create:               'Sheet request was successfully created'
     profiles:
       update:               'Profile updated successfully'
+    social:
+      profiles:
+        follow:             'You are now following %{name}'
+        unfollow:           'You are no longer following %{name}'
 
   #when the notice was not successfully
   alert:
@@ -209,35 +218,6 @@ en:
         proteins:           'Proteins g'
         fat:                'Fat g'
 
-  #account------------------------------------
-  account:
-    metrics:
-      edit:
-        title:                  'Metrics'
-        label:
-          height:               'Height (cm)'
-          weight:               'Weight (kg)'
-          age:                  'Age'
-          gender:               'Gender'
-    index:
-      title:                    'Account'
-      identity:
-        title:                  'Profile information'
-        show:                   'View healthy metrics'
-        add:                    'Add healthy metrics'
-        edit_profile:           'Change profile information'
-      settings:
-        title:                  'Settings'
-        change_avatar:          'Change avatar'
-        change_password:        'Change password'
-        change_email:           'Change email address'
-      session:
-        title:                  'Session'
-        collection_sessions:    'Sessions'
-      preferences:
-        title:                  'Preferences'
-        language:               'Language'
-        color_scheme:           'Color scheme'
 
 
 
@@ -252,11 +232,13 @@ en:
   female: 'Female'
 
   healthy_metric:
-    title: 'Health Metrics'
+    title: 'Body Metrics'
     new:
-      title: 'Add Health Metric'
+      title: 'Add Body Metrics'
     edit:
-      title: 'Edit Health Metric'
+      title: 'Edit Body Metrics'
+    show:
+      title: 'Body Metrics'
 
   #welcome------------------------------------
   welcome:
@@ -304,6 +286,28 @@ en:
           week:  "week"
           month: "month"
           year:  "year"
+
+  #profiles------------------------------
+  profiles:
+    index:
+      title: "Profiles"
+
+  #toast------------------------------
+  toast:
+    new_follower: 'started following you'
+
+  #social------------------------------
+  social:
+    profiles:
+      index:
+        title:     "Profiles"
+      show:
+        followers: "%{count} followers"
+        followings: "%{count} following"
+      followers:
+        title:     'Followers'
+      followings:
+        title:     'Following'
 
   #sessions------------------------------
   sessions:
@@ -356,12 +360,29 @@ en:
 
   #identity----------------------------
   identity:
+    settings:
+      show:
+        title:                    'Settings'
+        settings:
+          title:                  'Security & Credentials'
+          change_password:        'Change password'
+          change_email:           'Change email address'
+        session:
+          title:                  'Session'
+          collection_sessions:    'Sessions'
+        preferences:
+          title:                  'Preferences'
+          language:               'Language'
+          color_scheme:           'Color scheme'
     profiles:
       edit:
         title:                   'Edit informations'
         name:                    'Name'
       show:
         title:                   'Profile'
+        profile:                 'Profile'
+        edit:                    'Edit'
+        metrics:                 'Metrics'
     avatars:
       edit:
         title:                   'Edit Avatar'
@@ -408,6 +429,11 @@ en:
       confirm_link:                      "Yes, use this email for my account"
       help_message:                      "Have questions or need help? Just reply to this email and our support team will help
                                           you sort it out."
+    new_follower:
+      subject:                           "%{name} is now following you on FitPlan"
+      message:                           "%{name} started following you on FitPlan."
+      cta:                               "Check out their profile and follow them back if you'd like to connect."
+      view_profile:                      "View %{name}'s profile"
     password_reset:
       message:                           "Can't remember your password for %{email}? That's OK, it happens.
                                           Just hit the link below to set a new one."

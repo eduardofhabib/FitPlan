@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   get "welcome", to: "welcome#index"
-  get "account", to: "account#index"
-
   get    "sign_in", to: "sessions#new"
   post   "sign_in", to: "sessions#create"
   get    "sign_up", to: "registrations#new"
@@ -9,12 +7,24 @@ Rails.application.routes.draw do
   resources :sessions, only: [:index, :show, :destroy]
   resource  :password, only: [:edit, :update]
   namespace :identity do
+    resource :settings,           only: [:show]
     resource :email,              only: [:edit, :update]
     resource :email_verification, only: [:show, :create]
     resource :password_reset,     only: [:new,  :edit, :create, :update]
-    resource :profile,            only: [:edit, :update]
+    resource :profile,            only: [:show, :edit, :update]
     resource :avatar,             only: [:update, :destroy]
     resource :healthy_metric,     except: [:destroy]
+  end
+
+  namespace :social do
+    resources :profiles, only: [:index, :show] do
+      member do
+        post   :follow
+        delete :unfollow
+        get :followers
+        get :followings
+      end
+    end
   end
 
   resources :sheets do
