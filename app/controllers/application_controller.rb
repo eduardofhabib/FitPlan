@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate, except: %i[ set_session_locale ]
   before_action :set_locale
 
+  helper_method :current_user_avatar
+
   def set_session_locale
     session[:locale] = params[:locale] if has_locale_in_params?
     recede_or_redirect_to request.referer || root_path
@@ -20,6 +22,10 @@ class ApplicationController < ActionController::Base
     def set_current_request_details
       Current.user_agent = request.user_agent
       Current.ip_address = request.ip
+    end
+
+    def current_user_avatar
+      @current_user_avatar ||= Current.user&.avatar
     end
 
   protected
