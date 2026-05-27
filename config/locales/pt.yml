@@ -18,6 +18,7 @@ pt:
   link_sheet_requests: 'Solicitações de Planilha'
   link_dashboard:      'Painel'
   link_profiles:       'Perfis'
+  link_rankings:       'Ranks'
 
   #languages
   language:     'Idioma'
@@ -283,6 +284,27 @@ pt:
   #toast------------------------------
   toast:
     new_follower: 'começou a te seguir'
+
+  #rankings------------------------------
+  rankings:
+    index:
+      title:         'Ranking'
+      description:   'Compare conclusões, sequência e melhor dia entre você e outros usuários.'
+      metrics_label: 'Categoria'
+      empty:         'Ninguém no ranking ainda.'
+      scopes:
+        friends:     'Amigos'
+        global:      'Global'
+      metric_hints:
+        total_completions: 'Total de conclusões de fichas.'
+        streak:            'Dias consecutivos com pelo menos uma conclusão.'
+        best_day:          'Dia da semana com mais conclusões e seu volume.'
+    metrics:
+      total_completions: 'Total de conclusões'
+      streak:            'Sequência'
+      best_day:          'Melhor dia'
+    entry:
+      you:               'Você'
 
   #social------------------------------
   social:

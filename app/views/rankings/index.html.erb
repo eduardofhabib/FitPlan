@@ -1,0 +1,37 @@
+<% content_for :title, t('.title') %>
+
+<h1 class="mb-2"><%= t('.title') %></h1>
+<p class="text-muted mb-3"><%= t('.description') %></p>
+
+<div class="d-flex gap-2 mb-4">
+  <%= link_to t('.scopes.friends'), rankings_path(rankings_filter_params(scope: 'friends')),
+      class: "btn flex-fill #{rankings_scope_active?('friends') ? 'btn-success' : 'btn-outline-success'}" %>
+  <%= link_to t('.scopes.global'), rankings_path(rankings_filter_params(scope: 'global')),
+      class: "btn flex-fill #{rankings_scope_active?('global') ? 'btn-success' : 'btn-outline-success'}" %>
+</div>
+
+<div class="mb-4">
+  <p class="small text-muted mb-2 fw-medium"><%= t('.metrics_label') %></p>
+  <div class="d-flex flex-wrap gap-2">
+    <% Ranking::Metric.all.each do |metric| %>
+      <%= link_to ranking_metric_label(metric), rankings_path(rankings_filter_params(metric: metric.key)),
+          class: "btn btn-sm #{rankings_metric_active?(metric) ? 'btn-success' : 'btn-outline-secondary'}" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="bg-body-tertiary rounded border-bottom border-orange p-3 mb-4">
+  <h6 class="mb-0 d-flex align-items-center gap-2">
+    <i class="bi <%= @metric.icon %> text-orange"></i>
+    <%= ranking_metric_label(@metric) %>
+  </h6>
+  <p class="text-muted small mb-0 mt-1"><%= t(".metric_hints.#{@metric.key}") %></p>
+</div>
+
+<% if @entries.any? %>
+  <div class="d-flex flex-column gap-2">
+    <%= render partial: 'entry', collection: @entries, as: :entry %>
+  </div>
+<% else %>
+  <p class="text-muted text-center py-5"><%= t('.empty') %></p>
+<% end %>

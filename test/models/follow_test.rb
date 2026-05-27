@@ -68,6 +68,14 @@ class FollowTest < ActiveSupport::TestCase
     assert_includes @user.followings, @other
   end
 
+  test "friends_of includes followings and the user" do
+    friends = User.friends_of(@user)
+
+    assert_includes friends, @user
+    assert_includes friends, @other
+    assert_equal @user.followings.count + 1, friends.count
+  end
+
   test "followed online? returns true when cache key exists" do
     with_memory_cache do |cache|
       cache.write("user_online:#{@other.id}", true)
