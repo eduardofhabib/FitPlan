@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   end
 
   get :dashboard, to: "dashboard#index", as: :dashboard
+  get :rankings,  to: "rankings#index",  as: :rankings
 
   root 'sheets#index'
   get "set_locale/(:locale)", to: "application#set_session_locale", as: :set_locale

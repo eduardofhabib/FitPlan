@@ -1,0 +1,37 @@
+<% highlight = entry.user == Current.user %>
+
+<div class="d-flex align-items-center justify-content-between p-3 rounded border-start border-4 shadow-sm
+            <%= highlight ? 'bg-success-subtle border-success' : 'bg-body-tertiary border-orange' %>">
+  <div class="d-flex align-items-center gap-3 min-w-0">
+    <span class="d-inline-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+          style="width: 2.5rem; height: 2.5rem;">
+      <i class="bi <%= ranking_position_icon(entry.position) %>"></i>
+    </span>
+
+    <%= link_to profile_action_link(entry.user), data: { turbo_frame: '_top' }, class: 'text-decoration-none min-w-0' do %>
+      <div class="d-flex align-items-center gap-2 min-w-0">
+        <% if entry.user.avatar.attached? %>
+          <%= image_tag entry.user.avatar, class: 'rounded-circle border border-success-subtle object-fit-cover flex-shrink-0',
+                        width: 48, height: 48 %>
+        <% else %>
+          <span class="d-inline-flex align-items-center justify-content-center rounded-circle border border-success-subtle flex-shrink-0"
+                style="width: 48px; height: 48px;">
+            <i class="bi bi-person-fill text-body"></i>
+          </span>
+        <% end %>
+
+        <div class="min-w-0">
+          <h6 class="fw-semibold mb-0 text-truncate text-body">
+            <%= entry.user.name %>
+            <% if highlight %><span class="badge text-bg-success ms-1"><%= t('rankings.entry.you') %></span><% end %>
+          </h6>
+          <p class="text-muted small mb-0">@<%= entry.user.handle %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-end flex-shrink-0 ms-2">
+    <div class="fw-bold text-success fs-5"><%= ranking_formatted_value(entry) %></div>
+  </div>
+</div>

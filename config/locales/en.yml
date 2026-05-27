@@ -7,6 +7,7 @@ en:
   link_sheet_requests: 'Sheet Requests'
   link_dashboard: 'Dashboard'
   link_profiles:  'Profiles'
+  link_rankings:  'Ranks'
 
   #languages
   language:     'Language'
@@ -295,6 +296,27 @@ en:
   #toast------------------------------
   toast:
     new_follower: 'started following you'
+
+  #rankings------------------------------
+  rankings:
+    index:
+      title:         'Ranking'
+      description:   'Compare completions, streak, and best day between you and other users.'
+      metrics_label: 'Category'
+      empty:         'No one on the leaderboard yet.'
+      scopes:
+        friends:     'Friends'
+        global:      'Global'
+      metric_hints:
+        total_completions: 'Total sheet completions.'
+        streak:            'Consecutive days with at least one completion.'
+        best_day:          'Weekday with the most completions and its count.'
+    metrics:
+      total_completions: 'Total completions'
+      streak:            'Streak'
+      best_day:          'Best day'
+    entry:
+      you:               'You'
 
   #social------------------------------
   social:
