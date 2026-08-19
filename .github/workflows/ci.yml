@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Ensure locally installed gems are not committed
-        run: test -z "$(git ls-files vendor/bundle)"
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

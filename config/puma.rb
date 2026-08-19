@@ -27,9 +27,7 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 threads threads_count, threads_count
 
-# Windows Ruby does not support Puma's worker (forking) mode. Keep the
-# existing clustered configuration everywhere else, including production.
-workers ENV.fetch("WEB_CONCURRENCY", 1) unless Gem.win_platform? && Rails.env.development?
+workers ENV.fetch("WEB_CONCURRENCY", 1)
 preload_app!
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
@@ -39,8 +37,7 @@ port ENV.fetch("PORT", 3000)
 plugin :tmp_restart
 
 # Run the Solid Queue supervisor inside of Puma for single-server deployments
-# Solid Queue's Puma plugin uses fork and cannot run on native Windows Ruby.
-plugin :solid_queue if !(Gem.win_platform? && Rails.env.development?) && (ENV["SOLID_QUEUE_IN_PUMA"] == "true" || Rails.env.development?)
+plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"] == "true" || Rails.env.development?
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.

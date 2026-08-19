@@ -6,7 +6,7 @@ class Ranking::MetricTest < ActiveSupport::TestCase
   end
 
   test "catalog includes completion metrics only" do
-    expected = %w[total_completions streak best_day]
+    expected = %w[total_completions best_day completions_today streak]
     assert_equal expected, Ranking::Metric.keys
   end
 end

@@ -1,51 +1,38 @@
-<% content_for(:title, t('.title')) %>
+<% content_for :title, t('.title') %>
 
-<h1 class="mb-4"><i class="bi bi-trophy me-2 text-warning"></i><%= t('.title') %></h1>
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+  <div>
+    <h1 class="mb-1"><i class="bi bi-trophy me-2 text-warning"></i><%= t('.title') %></h1>
+    <p class="text-muted mb-0"><%= t('.description') %></p>
+  </div>
 
-<div class="d-flex flex-wrap gap-2 mb-3">
-  <% RankingsController::RANKING_SCOPES.each do |scope| %>
-    <%= link_to t(".scopes.#{scope}"), rankings_path(metric: @metric, scope: scope), class: "btn btn-sm #{scope == @ranking_scope ? 'btn-success' : 'btn-outline-success'}" %>
-  <% end %>
+  <div class="btn-group" role="group" aria-label="<%= t('.scopes_label') %>">
+    <% Ranking::Leaderboard::SCOPES.each do |scope| %>
+      <%= link_to t(".scopes.#{scope}"), rankings_path(rankings_filter_params(scope:)),
+                  class: "btn btn-sm #{rankings_scope_active?(scope) ? 'btn-success' : 'btn-outline-success'}" %>
+    <% end %>
+  </div>
 </div>
 
-<div class="d-flex flex-wrap gap-2 mb-4">
-  <% User::RANKING_METRICS.each do |metric| %>
-    <%= link_to t(".metrics.#{metric}"), rankings_path(metric: metric, scope: @ranking_scope), class: "btn btn-sm #{metric == @metric ? 'btn-primary' : 'btn-outline-primary'}" %>
-  <% end %>
-</div>
-
-<div class="row">
-  <% @users.each do |user| %>
-    <div class="col-md-6 mb-3">
-      <%= link_to social_profile_path(user), class: 'text-decoration-none' do %>
-        <div class="d-flex align-items-center gap-3 p-3 bg-body-tertiary shadow-sm rounded border-success border-start border-4">
-          <span class="fs-4 fw-bold text-warning">#<%= user.ranking_position %></span>
-
-          <% if user.avatar.attached? %>
-            <%= image_tag user.avatar, class: 'rounded-circle border border-success-subtle border-3 object-fit-cover', width: 56, height: 56, alt: '' %>
-          <% else %>
-            <span class="d-inline-flex align-items-center justify-content-center rounded-circle border border-success-subtle border-3" style="width: 56px; height: 56px;">
-              <i class="bi bi-person-fill text-body"></i>
-            </span>
-          <% end %>
-
-          <div class="flex-grow-1 overflow-hidden">
-            <h2 class="h6 fw-semibold mb-1 text-truncate text-body"><%= user.name %></h2>
-            <p class="text-muted small mb-0 text-truncate">@<%= user.handle %></p>
-          </div>
-
-          <span class="badge bg-success-subtle text-success">
-            <% case @metric %>
-            <% when 'best_day' %>
-              <%= t('.best_day', day: user.best_weekday ? t('date.day_names')[user.best_weekday.to_i] : '-', count: user.dashboard_metric_value) %>
-            <% when 'streak' %>
-              <%= t('.days', count: user.dashboard_metric_value) %>
-            <% else %>
-              <%= t('.completions', count: user.dashboard_metric_value) %>
-            <% end %>
-          </span>
-        </div>
+<div class="mb-4">
+  <span class="d-block small fw-semibold text-muted mb-2"><%= t('.metrics_label') %></span>
+  <div class="d-flex flex-wrap gap-2">
+    <% Ranking::Metric.all.each do |metric| %>
+      <%= link_to rankings_path(rankings_filter_params(metric: metric.key)),
+                  class: "btn btn-sm #{rankings_metric_active?(metric) ? 'btn-primary' : 'btn-outline-primary'}" do %>
+        <i class="bi <%= metric.icon %> me-1"></i><%= ranking_metric_label(metric) %>
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
+
+<% if @entries.any? %>
+  <div class="d-grid gap-3">
+    <%= render partial: 'entry', collection: @entries %>
+  </div>
+<% else %>
+  <div class="text-center bg-body-tertiary rounded p-5">
+    <i class="bi bi-people fs-1 text-muted"></i>
+    <p class="text-muted mb-0 mt-2"><%= t('.empty') %></p>
+  </div>
+<% end %>

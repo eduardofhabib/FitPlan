@@ -15,13 +15,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # PostgreSQL on Windows listens over TCP rather than a Unix socket. The
-  # defaults below keep Unix/macOS behavior unchanged and allow local Windows
-  # credentials to be supplied without committing them.
-  host: <%= ENV.fetch("POSTGRES_HOST", Gem.win_platform? ? "127.0.0.1" : nil) %>
-  port: <%= ENV.fetch("POSTGRES_PORT", Gem.win_platform? ? 5432 : nil) %>
-  username: <%= ENV.fetch("POSTGRES_USER", Gem.win_platform? ? "fitplan" : nil) %>
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

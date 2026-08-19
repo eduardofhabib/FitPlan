@@ -298,26 +298,34 @@ pt:
           month: "mês"
           year:  "ano"
 
-  #toast------------------------------
+  #rankings------------------------------
   rankings:
     index:
-      title: "Ranking"
+      title:         'Ranking'
+      description:   'Compare as conclusões do FitPlan entre você e outros usuários.'
+      scopes_label:  'Tipo de ranking'
+      metrics_label: 'Categoria'
+      empty:         'Nenhum usuário elegível para este ranking.'
       scopes:
-        global: "Global"
-        friends: "Amigos"
-      metrics:
-        total_completions: "Total de conclusões"
-        best_day: "Melhor dia"
-        completions_today: "Conclusões hoje"
-        streak: "Sequência"
+        global:  'Global'
+        friends: 'Amigos'
+    metrics:
+      total_completions: 'Total de conclusões'
+      best_day:          'Melhor dia'
+      completions_today: 'Conclusões hoje'
+      streak:            'Sequência'
+    values:
       completions:
-        one: "%{count} conclusão"
-        other: "%{count} conclusões"
+        one:   '%{count} conclusão'
+        other: '%{count} conclusões'
       days:
-        one: "%{count} dia"
-        other: "%{count} dias"
-      best_day: "%{day} (%{count})"
+        one:   '%{count} dia'
+        other: '%{count} dias'
+      best_day: '%{day} (%{count})'
+    entry:
+      you: 'Você'
 
+  #toast------------------------------
   toast:
     new_follower: 'começou a te seguir'
     new_sheet_share: 'compartilhou fichas com você.'

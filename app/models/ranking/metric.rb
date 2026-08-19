@@ -4,8 +4,9 @@ module Ranking
 
     CATALOG = [
       { key: :total_completions, icon: "bi-bar-chart" },
-      { key: :streak,              icon: "bi-trophy" },
-      { key: :best_day,            icon: "bi-star" }
+      { key: :best_day,         icon: "bi-star" },
+      { key: :completions_today, icon: "bi-check-circle" },
+      { key: :streak,            icon: "bi-trophy" }
     ].freeze
 
     def self.all
@@ -27,16 +28,6 @@ module Ranking
     def initialize(key:, icon:)
       @key  = key
       @icon = icon
-    end
-
-    def value_for(user)
-      user.public_send(:"ranking_#{key}")
-    end
-
-    def metadata_for(user)
-      return {} unless key == :best_day
-
-      { weekday: user.ranking_best_weekday }
     end
   end
 end

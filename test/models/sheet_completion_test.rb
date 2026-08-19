@@ -33,6 +33,14 @@ class SheetCompletionTest < ActiveSupport::TestCase
     assert_nil @user.sheet_completions.best_weekday
   end
 
+  test "best_weekday deterministically picks the earliest weekday on a tie" do
+    @user.sheet_completions.destroy_all
+    @user.sheet_completions.create!(sheet: sheets(:one), completed_at: Time.zone.local(2026, 3, 29, 12))
+    @user.sheet_completions.create!(sheet: sheets(:one), completed_at: Time.zone.local(2026, 3, 30, 12))
+
+    assert_equal 0, @user.sheet_completions.best_weekday
+  end
+
   test "weekly_progress should return this_week last_week and percentage" do
     progress = @user.sheet_completions.weekly_progress
 

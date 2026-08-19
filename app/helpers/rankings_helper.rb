@@ -27,11 +27,11 @@ module RankingsHelper
   def ranking_formatted_value(entry)
     case @metric.key
     when :streak
-      "#{entry.raw_value.to_i} #{t('dashboard.index.cards.days')}"
+      t("rankings.values.days", count: entry.raw_value.to_i)
     when :best_day
       ranking_best_day_label(entry)
     else
-      entry.raw_value.to_i.to_s
+      t("rankings.values.completions", count: entry.raw_value.to_i)
     end
   end
 
@@ -42,7 +42,6 @@ module RankingsHelper
       return "-" if weekday.nil?
 
       day_name = t("date.day_names")[weekday]
-      count = entry.raw_value.to_i
-      count.positive? ? "#{day_name} (#{count})" : day_name
+      t("rankings.values.best_day", day: day_name, count: entry.raw_value.to_i)
     end
 end

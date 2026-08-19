@@ -307,29 +307,37 @@ en:
           month: "month"
           year:  "year"
 
+  #rankings------------------------------
+  rankings:
+    index:
+      title:         'Ranking'
+      description:   'Compare FitPlan completions between you and other users.'
+      scopes_label:  'Ranking scope'
+      metrics_label: 'Category'
+      empty:         'No eligible users for this ranking.'
+      scopes:
+        global:  'Global'
+        friends: 'Friends'
+    metrics:
+      total_completions: 'Total completions'
+      best_day:          'Best day'
+      completions_today: 'Completions today'
+      streak:            'Streak'
+    values:
+      completions:
+        one:   '%{count} completion'
+        other: '%{count} completions'
+      days:
+        one:   '%{count} day'
+        other: '%{count} days'
+      best_day: '%{day} (%{count})'
+    entry:
+      you: 'You'
+
   #profiles------------------------------
   profiles:
     index:
       title: "Profiles"
-
-  rankings:
-    index:
-      title: "Ranking"
-      scopes:
-        global: "Global"
-        friends: "Friends"
-      metrics:
-        total_completions: "Total completions"
-        best_day: "Best day"
-        completions_today: "Completions today"
-        streak: "Streak"
-      completions:
-        one: "%{count} completion"
-        other: "%{count} completions"
-      days:
-        one: "%{count} day"
-        other: "%{count} days"
-      best_day: "%{day} (%{count})"
 
   #toast------------------------------
   toast:
