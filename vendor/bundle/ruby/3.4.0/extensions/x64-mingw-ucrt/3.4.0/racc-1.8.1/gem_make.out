@@ -1,0 +1,19 @@
+current directory: C:/Users/eduar/Desktop/Trabalho/WorkSpace/FitPlan-main/FitPlan-main/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+C:/Ruby34-x64/bin/ruby.exe extconf.rb
+creating Makefile
+
+current directory: C:/Users/eduar/Desktop/Trabalho/WorkSpace/FitPlan-main/FitPlan-main/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260818-25956-xbvtgr sitelibdir\=./.gem.20260818-25956-xbvtgr clean
+
+current directory: C:/Users/eduar/Desktop/Trabalho/WorkSpace/FitPlan-main/FitPlan-main/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260818-25956-xbvtgr sitelibdir\=./.gem.20260818-25956-xbvtgr
+generating cparse-x64-mingw-ucrt.def
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: C:/Users/eduar/Desktop/Trabalho/WorkSpace/FitPlan-main/FitPlan-main/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260818-25956-xbvtgr sitelibdir\=./.gem.20260818-25956-xbvtgr install
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20260818-25956-xbvtgr/racc
+
+current directory: C:/Users/eduar/Desktop/Trabalho/WorkSpace/FitPlan-main/FitPlan-main/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260818-25956-xbvtgr sitelibdir\=./.gem.20260818-25956-xbvtgr clean
