@@ -24,24 +24,24 @@ module RankingsHelper
     t("rankings.metrics.#{metric.key}")
   end
 
-  def ranking_formatted_value(entry)
+  def ranking_formatted_value(user)
     case @metric.key
     when :streak
-      t("rankings.values.days", count: entry.raw_value.to_i)
+      t("rankings.values.days", count: user.ranking_value)
     when :best_day
-      ranking_best_day_label(entry)
+      ranking_best_day_label(user)
     else
-      t("rankings.values.completions", count: entry.raw_value.to_i)
+      t("rankings.values.completions", count: user.ranking_value)
     end
   end
 
   private
 
-    def ranking_best_day_label(entry)
-      weekday = entry.metadata[:weekday]
+    def ranking_best_day_label(user)
+      weekday = user.ranking_best_weekday
       return "-" if weekday.nil?
 
       day_name = t("date.day_names")[weekday]
-      t("rankings.values.best_day", day: day_name, count: entry.raw_value.to_i)
+      t("rankings.values.best_day", day: day_name, count: user.ranking_value)
     end
 end

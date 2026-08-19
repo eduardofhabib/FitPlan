@@ -1,6 +1,18 @@
 module User::Rankable
   extend ActiveSupport::Concern
 
+  def ranking_value
+    self[:dashboard_metric_value].to_i
+  end
+
+  def ranking_position
+    self[:ranking_position].to_i
+  end
+
+  def ranking_best_weekday
+    self[:best_weekday]&.to_i
+  end
+
   class_methods do
     def ranked_by_metric(metric)
       case metric.to_s
@@ -50,7 +62,8 @@ module User::Rankable
 
       def ranking_select(metric_value, extra_select = nil)
         <<~SQL.squish
-          users.*, #{metric_value} AS dashboard_metric_value#{extra_select},
+          users.id, users.name, users.handle,
+          #{metric_value} AS dashboard_metric_value#{extra_select},
           DENSE_RANK() OVER (ORDER BY #{metric_value} DESC) AS ranking_position
         SQL
       end
@@ -58,22 +71,13 @@ module User::Rankable
       def best_day_ranking_join
         <<~SQL.squish
           LEFT JOIN (
-            SELECT user_id, weekday, completions_count AS metric_value
-            FROM (
-              SELECT user_id, weekday, completions_count,
-                     ROW_NUMBER() OVER (
-                       PARTITION BY user_id
-                       ORDER BY completions_count DESC, weekday ASC
-                     ) AS position
-              FROM (
-                SELECT user_id,
-                       EXTRACT(DOW FROM completed_at)::integer AS weekday,
-                       COUNT(*) AS completions_count
-                FROM sheet_completions
-                GROUP BY user_id, EXTRACT(DOW FROM completed_at)::integer
-              ) AS weekday_counts
-            ) AS ranked_weekdays
-            WHERE position = 1
+            SELECT DISTINCT ON (user_id)
+                   user_id,
+                   EXTRACT(DOW FROM completed_at)::integer AS weekday,
+                   COUNT(*) AS metric_value
+            FROM sheet_completions
+            GROUP BY user_id, EXTRACT(DOW FROM completed_at)::integer
+            ORDER BY user_id, COUNT(*) DESC, EXTRACT(DOW FROM completed_at)::integer ASC
           ) AS best_day_metrics ON best_day_metrics.user_id = users.id
         SQL
       end
