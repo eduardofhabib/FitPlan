@@ -28,8 +28,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rankings, only: :index
-
   namespace :sheets do
     resources :shares, only: [:index, :new, :create, :show, :destroy] do
       resources :requests, only: [:update, :destroy], shallow: true do
