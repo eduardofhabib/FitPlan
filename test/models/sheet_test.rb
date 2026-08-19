@@ -2,10 +2,15 @@ require "test_helper"
 
 class SheetTest < ActiveSupport::TestCase
   setup do
-    @workout_sheet = sheets(:one)
-    @diet_sheet = sheets(:two)
+    @workout_sheet       = sheets(:one)
+    @diet_sheet          = sheets(:two)
     @empty_workout_sheet = sheets(:empty_workout)
-    @empty_diet_sheet = sheets(:empty_diet)
+    @empty_diet_sheet    = sheets(:empty_diet)
+  end
+
+  test "should be invalid without a name" do
+    sheet = Sheet.new(sheet_type: :workout, user: @workout_sheet.user)
+    assert_not sheet.valid?
   end
 
   test "should destroy workouts when changing sheet_type to diet" do
@@ -22,6 +27,7 @@ class SheetTest < ActiveSupport::TestCase
 
   test "completed? should be true with a completion today" do
     assert_not @workout_sheet.completed?
+
     @workout_sheet.complete!
     assert @workout_sheet.completed?
   end
@@ -84,5 +90,12 @@ class SheetTest < ActiveSupport::TestCase
     assert_no_difference "SheetCompletion.count" do
       @workout_sheet.uncomplete!
     end
+  end
+
+  test "with_content includes sheets with workouts or diets and excludes empty ones" do
+    assert_includes Sheet.with_content, @workout_sheet
+    assert_includes Sheet.with_content, @diet_sheet
+    assert_not_includes Sheet.with_content, @empty_workout_sheet
+    assert_not_includes Sheet.with_content, @empty_diet_sheet
   end
 end

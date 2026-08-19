@@ -2,32 +2,24 @@ require "test_helper"
 
 class RankingsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:lazaro_nixon)
-    sign_in_as(@user)
+    sign_in_as(users(:lazaro_nixon))
   end
 
-  test "should get index with friends scope by default" do
+  test "should get index" do
     get rankings_url
+
     assert_response :success
-    assert_match I18n.t("rankings.index.scopes.friends"), response.body
+    assert_select "h1", I18n.t("rankings.index.title")
   end
 
-  test "should get index with global scope" do
-    get rankings_url(scope: "global")
-    assert_response :success
-    assert_match I18n.t("rankings.index.scopes.global"), response.body
-  end
+  test "friends ranking includes the current user and mutual friends only" do
+    outsider = User.create!(name: "Outsider", email: "outsider@example.com", password: "Secret1*3*5*")
 
-  test "should get index with metric filter" do
-    get rankings_url(metric: "streak")
-    assert_response :success
-    assert_match I18n.t("rankings.metrics.streak"), response.body
-  end
+    get rankings_url(metric: "streak", scope: "friends")
 
-  test "ignores invalid scope and metric" do
-    get rankings_url(scope: "invalid", metric: "invalid")
     assert_response :success
-    assert_match I18n.t("rankings.index.scopes.friends"), response.body
-    assert_match I18n.t("rankings.metrics.total_completions"), response.body
+    assert_select "h2", users(:lazaro).name
+    assert_select "h2", users(:lazaro_nixon).name
+    assert_select "h2", text: outsider.name, count: 0
   end
 end

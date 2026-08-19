@@ -7,7 +7,7 @@ en:
   link_sheet_requests: 'Sheet Requests'
   link_dashboard: 'Dashboard'
   link_profiles:  'Profiles'
-  link_rankings:  'Ranks'
+  link_ranking:   'Ranking'
 
   #languages
   language:     'Language'
@@ -32,7 +32,11 @@ en:
   uncompleted:        "Uncompleted"
   today:              "today"
   message_destroy:    "Are you sure?"
+
+  request:
+    processing: "Processing"
   minimum_characters: "6 characters minimum."
+  toggle_password_visibility: 'Toggle password visibility'
   cancel:             "Cancel"
   confirm:            "Confirm"
   follow:             "Follow"
@@ -87,6 +91,9 @@ en:
       create:               'Healthy metric was successfully created'
     sheet_request:
       create:               'Sheet request was successfully created'
+      destroy:              'Share was successfully deleted'
+    sheet_share:
+      destroy:              'Share deleted successfully'
     profiles:
       update:               'Profile updated successfully'
     social:
@@ -103,6 +110,8 @@ en:
       invalid:              'That password reset link is invalid'
     email_verification:
       invalid:              'That email verification link is invalid'
+    sheet_share:
+      not_found:            'Share not found'
 
   errors:
     sheet_request:
@@ -119,6 +128,8 @@ en:
       title:                'Sheets'
       filter:               'Filter'
       completed:            'Completed'
+      shares:
+        title:              'Shared'
     new:
       title:                'New sheet'
     edit:
@@ -132,39 +143,36 @@ en:
         name:               'Name'
         description:        'Description'
         sheet_type:         'Type'
-    requests:
+      placeholder:
+        name:               'e.g. Workout A'
+        description:        'Sheet description...'
+    shares:
       index:
-        title:               'Sheet requests'
-        filter:              'Filter'
+        title:    'Shares'
+        filter:   'Filter'
         filters:
-          all:               'All'
-          sent:              'Sent by me'
-          received:          'Received'
+          sent:     'Sent by me'
+          received: 'Received'
+      show:
+        title:           'Share'
+        delete:          'Delete'
+        confirm_delete:  'Deleting this share will remove all requests. Any in-progress copies will also be cancelled. Confirm?'
+        auto_close_hint: 'This share closes automatically when all requests are processed or removed.'
       new:
-        title:                     'New sheet request'
-        search_user:               'Search user'
-        handle:                    'Handle (@)'
-        submit:                    'Send request'
-        select_sheets:             'Select sheets'
+        title:                     'Share sheets'
+        handle:                    'Search user'
+        share:                     'Share'
+        submit:                    'Send'
         select_sheets_placeholder: 'Choose sheets...'
         select_sheets_help:        'Select up to 5 sheets.'
-
-  #sheet_requests----------------------------------
-  sheet_request_shared:      'Shared a sheet'
-  sheet_request_received:    'Received a sheet'
-
-  sheet_requests:
-    index:
-      title:                 'Sheet requests'
-      filter:                'Filter'
-      filters:
-        all:                 'All'
-        sent:                'Sent by me'
-        received:            'Received'
-    new:
-      title:                'New sheet request'
-      search_user:          'Search user'
-      handle:               'Handle (@)'
+      share:
+        sent:
+          one:   'shared %{count} sheet'
+          other: 'shared %{count} sheets'
+        received:
+          one:   'sent you %{count} sheet'
+          other: 'sent you %{count} sheets'
+        pending: 'pending'
 
   #workouts------------------------------
   repetitions:        'Repetitions'
@@ -183,18 +191,23 @@ en:
     form:
       error_message_form:     'prohibited this workout from being saved:'
       label:
-        name:               'Name'
+        exercise:           'Exercise'
         repetitions:        'Repetitions'
         series:             'Series'
         interval:           'Interval'
         charge:             'Charge'
+      placeholder:
+        exercise:           'e.g. Bench press'
+        series:             'e.g. 4'
+        repetitions:        'e.g. 10-12'
+        interval:           'e.g. 60'
       options_charge:
         low:              'low'
         medium:           'medium'
         high:             'high'
       help:
         interval:         'Interval in seconds, ex: 60 (1 minute)'
-      supported_files:      'Supported files mp4, mpeg and quicktime'
+      supported_files:      'mp4, mpeg, quicktime · max 16MB'
       remove_preview:       'Remove preview'
 
   #diets--------------------------------------
@@ -218,6 +231,11 @@ en:
         carbohydrates:      'Carbohydrates g'
         proteins:           'Proteins g'
         fat:                'Fat g'
+      placeholder:
+        meal:               'e.g. Breakfast'
+        protein_g:          'e.g. 30'
+        carbohydrate_g:     'e.g. 50'
+        fat_g:              'e.g. 10'
 
 
 
@@ -260,9 +278,9 @@ en:
         text: "View your performance, compare results, and improve."
 
 
-  #dashboard-------------------------------------
-  dashboard:
-    index:
+  #dashboards-------------------------------------
+  dashboards:
+    show:
       title: "Dashboard"
       cards:
         total_calories: "Total calories"
@@ -276,6 +294,7 @@ en:
         title: "Weekly progress"
         description: "Completions this week compared to last week"
         vs_last_week: "vs last week"
+    charts:
       charts:
         sheets_created: "Sheets created"
         diets_calories_by_sheet: "Calories by sheet"
@@ -293,36 +312,38 @@ en:
     index:
       title: "Profiles"
 
+  rankings:
+    index:
+      title: "Ranking"
+      scopes:
+        global: "Global"
+        friends: "Friends"
+      metrics:
+        total_completions: "Total completions"
+        best_day: "Best day"
+        completions_today: "Completions today"
+        streak: "Streak"
+      completions:
+        one: "%{count} completion"
+        other: "%{count} completions"
+      days:
+        one: "%{count} day"
+        other: "%{count} days"
+      best_day: "%{day} (%{count})"
+
   #toast------------------------------
   toast:
     new_follower: 'started following you'
-
-  #rankings------------------------------
-  rankings:
-    index:
-      title:         'Ranking'
-      description:   'Compare completions, streak, and best day between you and other users.'
-      metrics_label: 'Category'
-      empty:         'No one on the leaderboard yet.'
-      scopes:
-        friends:     'Friends'
-        global:      'Global'
-      metric_hints:
-        total_completions: 'Total sheet completions.'
-        streak:            'Consecutive days with at least one completion.'
-        best_day:          'Weekday with the most completions and its count.'
-    metrics:
-      total_completions: 'Total completions'
-      streak:            'Streak'
-      best_day:          'Best day'
-    entry:
-      you:               'You'
+    new_sheet_share: 'sent you sheets to review.'
+    view: 'View'
 
   #social------------------------------
   social:
     profiles:
       index:
         title:     "Profiles"
+        placeholder:
+          query:   'Search users...'
       show:
         followers: "%{count} followers"
         followings: "%{count} following"
@@ -400,6 +421,12 @@ en:
       edit:
         title:                   'Edit informations'
         name:                    'Name'
+        handle:                  'Handle'
+        handle_description:      'Handle is used to identify you in the community.'
+        error_message_form:      'prohibited this profile from being saved:'
+        placeholder:
+          name:                  'Your name'
+          handle:                'your-handle'
       show:
         title:                   'Profile'
         profile:                 'Profile'
@@ -409,7 +436,7 @@ en:
       edit:
         title:                   'Edit Avatar'
       form:
-        supported_files:         'Supported Files jpg, jpeg, and png'
+        supported_files:         'jpg, jpeg, png · max 4MB'
       show:
         title:                   'Avatar'
     emails:
@@ -424,6 +451,8 @@ en:
         label:
           email:                         'New email'
           password_challenge:            "Password challenge"
+        placeholder:
+          email:                         'email@example.com'
 
     password_resets:
       edit:
@@ -439,9 +468,18 @@ en:
       new:
         title:                     'New password'
         send_reset_email:          'Send password reset email'
+        placeholder:
+          email:                   'email@example.com'
 
   #mailers------------------------------
   greeting:                              "Hello"
+
+  sheet_share_mailer:
+    new_sheet_share:
+      subject:              "%{name} shared sheets with you on FitPlan"
+      message:              "%{name} sent you sheets to review on FitPlan."
+      cta:                  "Open the share to accept or reject each sheet."
+      view_share:           "View shared sheets"
 
   user_mailer:
     email_verification:
@@ -477,4 +515,11 @@ en:
           attributes:
             avatar:
               error_avatar_type:         'must be a file (png, jpeg, jpg)'
-              error_avatar_size:         "is too big. Maximum size allowed is 2MB."
+              error_avatar_size:         "is too big. Maximum size allowed is 4MB."
+            handle:
+              blank:                     'choose a handle for your profile'
+              taken:                     'is already taken, please choose another'
+              too_short:
+                one:                     'must be at least %{count} character'
+                other:                   'must be at least %{count} characters'
+              invalid:                   'can only contain letters, numbers and hyphens'
