@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post   "sign_in", to: "sessions#create"
   get    "sign_up", to: "registrations#new"
   post   "sign_up", to: "registrations#create"
+
   resources :sessions, only: [:index, :show, :destroy]
   resource  :password, only: [:edit, :update]
   namespace :identity do
@@ -17,12 +18,22 @@ Rails.application.routes.draw do
   end
 
   namespace :social do
-    resources :profiles, only: [:index, :show] do
+    resources :profiles, only: [:index, :show], param: :handle do
       member do
         post   :follow
         delete :unfollow
         get :followers
         get :followings
+      end
+    end
+  end
+
+  resources :rankings, only: :index
+
+  namespace :sheets do
+    resources :shares, only: [:index, :new, :create, :show, :destroy] do
+      resources :requests, only: [:update, :destroy], shallow: true do
+        get :preview_content, on: :member
       end
     end
   end
@@ -38,16 +49,11 @@ Rails.application.routes.draw do
       resource :completion, only: %i[create destroy], module: :workouts
       resources :videos, only: [:destroy], module: :workouts
     end
-
-    collection do
-      resources :requests, module: :sheets, only: [:index, :new, :create, :destroy] do
-        patch :accept, on: :member
-      end
-    end
   end
 
-  get :dashboard, to: "dashboard#index", as: :dashboard
-  get :rankings,  to: "rankings#index",  as: :rankings
+  resource :dashboard, only: [:show] do
+    get :charts
+  end
 
   root 'sheets#index'
   get "set_locale/(:locale)", to: "application#set_session_locale", as: :set_locale

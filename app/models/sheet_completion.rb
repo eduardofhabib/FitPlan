@@ -12,11 +12,17 @@ class SheetCompletion < ApplicationRecord
   scope :today, -> { on_date(Date.current) }
 
   def self.streak
-    (0..).take_while { |i| on_date(Date.current - i).exists? }.size
+    dates = group(Arel.sql("DATE(completed_at)")).order(Arel.sql("DATE(completed_at) DESC")).pluck(Arel.sql("DATE(completed_at)"))
+    return 0 unless dates.first == Date.current
+
+    dates.each_with_index.take_while { |date, i| date == Date.current - i }.size
   end
 
   def self.best_weekday
-    group(Arel.sql("EXTRACT(DOW FROM completed_at)::integer")).count.max_by { |_, value| value }&.first
+    group(Arel.sql("EXTRACT(DOW FROM completed_at)::integer"))
+      .order(Arel.sql("EXTRACT(DOW FROM completed_at)::integer ASC"))
+      .count
+      .max_by { |_, value| value }&.first
   end
 
   def self.weekly_progress

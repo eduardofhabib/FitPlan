@@ -9,15 +9,6 @@ module User::Followable
     # high-level user collections
     has_many :followers, through: :follower_follows, source: :follower
     has_many :followings, through: :following_follows, source: :followed
-
-    # Usuários no ranking "Amigos": quem você segue + você.
-    scope :friends_of, ->(user) {
-      where(id: user.followings.select(:id)).or(where(id: user.id))
-    }
-  end
-
-  def friends
-    self.class.friends_of(self)
   end
 
   def follow!(followed:)
@@ -30,6 +21,10 @@ module User::Followable
 
   def following?(followed)
     followings.exists?(id: followed.id)
+  end
+
+  def friends
+    followings.where(id: followers)
   end
 
   def mark_followers_as_seen!
